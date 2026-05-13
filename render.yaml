@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: rifa-online
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false          # Cole a URL do Supabase aqui no painel do Render
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: SORTEIO_DATA_HORA
+        value: "2025-07-15T20:00:00"
+      - key: PIX_CHAVE
+        sync: false
+      - key: PIX_NOME
+        sync: false
+      - key: PIX_CIDADE
+        sync: false
+      - key: TOTAL_NUMEROS
+        value: "120"
+      - key: PRECO_NUMERO
+        value: "15"
+      - key: MINUTOS_EXPIRACAO_RESERVA
+        value: "30"

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rifa da Camisa Oficial do Brasil 🇧🇷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── WHATSAPP FAB ── -->
+  <a class="whats-fab" href="https://wa.me/5519988669279?text=Oi%20D%C3%A1leter%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20a%20rifa!" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.99.59 3.85 1.6 5.42L2 22l4.79-1.69c1.51.83 3.24 1.3 5.07 1.3 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.13c-1.65 0-3.18-.49-4.46-1.34l-.32-.2-2.85 1 .94-2.78-.21-.34a8.16 8.16 0 0 1-1.27-4.36c0-4.54 3.69-8.23 8.24-8.23 4.54 0 8.23 3.69 8.23 8.23 0 4.54-3.69 8.22-8.3 8.22zm4.52-6.16c-.25-.13-1.46-.72-1.69-.8-.23-.08-.39-.13-.56.13-.17.25-.64.8-.79.97-.15.17-.29.19-.54.06-.25-.13-1.04-.38-1.99-1.22-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.43.13-.14.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.42-.14 0-.31-.02-.47-.02s-.43.06-.66.31c-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.46-.6 1.66-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
+  </a>
+
+  <!-- ── LIVE BAR ── -->
+  <div class="live-bar">
+    <div class="live-indicator">
+      <span class="live-dot"></span>
+      <span>Rifa em andamento</span>
+    </div>
+    <div class="live-right">Sorteio em <b id="countdown">breve</b></div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">🏆 Grande Prêmio</div>
+        <h1 class="hero-title">
+          Concorra a esta<br>
+          <span class="hero-title-big">CAMISA</span>
+        </h1>
+        <div class="hero-subtitle-strip">
+          <span>OFICIAL DA SELEÇÃO!</span>
+        </div>
+        <div class="hero-trust">
+          <div class="htrust-pill">
+            <span class="htrust-icon">⭐</span>
+            <span>Produto<br>Oficial</span>
+          </div>
+          <div class="htrust-pill">
+            <span class="htrust-icon">🛡️</span>
+            <span>Qualidade<br>Premium</span>
+          </div>
+          <div class="htrust-pill">
+            <span class="htrust-icon">🎁</span>
+            <span>Um Prêmio<br>Incrível!</span>
+          </div>
+        </div>
+        <p class="hero-tagline">Sua sorte pode <em>vestir o Brasil!</em></p>
+      </div>
+      <div class="hero-image-wrap">
+        <img src="camisa-brasil.png" alt="Camisa Oficial da Seleção Brasileira masculina e feminina" class="hero-img">
+      </div>
+    </div>
+  </header>
+
+  <!-- ── SORTEIO RESULTADO (aparece após o sorteio) ── -->
+  <section id="secao-sorteio" class="sorteio-resultado" style="display:none">
+    <div class="sorteio-box">
+      <div class="sorteio-emoji">🎉</div>
+      <h2>Número Sorteado</h2>
+      <div class="numero-grande" id="numero-sorteado">—</div>
+      <p class="ganhador-nome" id="ganhador-nome"></p>
+      <p class="ganhador-ende" id="ganhador-ende"></p>
+      <p class="sorteio-metodo" id="sorteio-metodo"></p>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content">
+
+    <!-- ── TICKET + STATS ── -->
+    <div class="info-block">
+      <div class="ticket-wrap">
+        <div class="ticket">
+          <div class="ticket-stub">
+            <div class="stub-stars">★★★★★</div>
+            <div class="stub-word">RIFA</div>
+            <div class="stub-stars">★★★★★</div>
+            <div class="stub-barcode"></div>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-label">cada número</div>
+            <div class="ticket-price"><small>R$</small>15</div>
+            <div class="ticket-per">pode comprar quantos quiser ❤️</div>
+            <div class="ticket-pix">⚡ pago no Pix · liberação na hora</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-wrap">
+        <div class="stat-card">
+          <span class="stat-val" id="stat-livres">—</span>
+          <span class="stat-lbl">Disponíveis</span>
+        </div>
+        <div class="stat-card stat-card--sold">
+          <span class="stat-val" id="stat-vendidos">—</span>
+          <span class="stat-lbl">Vendidos</span>
+        </div>
+        <div class="stat-card stat-card--price">
+          <span class="stat-val">R$15</span>
+          <span class="stat-lbl">Por número</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progress-text">Carregando...</span>
+          <span class="progress-urgency" id="progress-urgency"></span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NUMBERS GRID ── -->
+    <section class="grid-section">
+      <h2 class="section-title">Escolha seus números</h2>
+      <div class="legend">
+        <span class="leg leg--free">Livre</span>
+        <span class="leg leg--res">Reservado</span>
+        <span class="leg leg--sold">Vendido</span>
+        <span class="leg leg--sel">Selecionado</span>
+      </div>
+      <div id="grid-numeros" class="grid-numeros"></div>
+
+      <div class="selecao-info" id="selecao-info" style="display:none">
+        <span id="selecao-texto">0 número(s) selecionado(s) — Total: R$ 0,00</span>
+        <button class="btn-limpar" onclick="limparSelecao()">Limpar</button>
+      </div>
+
+      <button class="btn-comprar" id="btn-comprar" onclick="abrirModal()" style="display:none">
+        Garantir meus números agora
+        <span class="btn-comprar-sub">→ paga em 1 minuto no Pix</span>
+      </button>
+      <p class="grid-note">🔒 reserva por 30 min · dados apenas para entrega do prêmio</p>
+    </section>
+
+    <!-- ── DALETER BLOCK ── -->
+    <div class="friend-block">
+      <img src="perfil.png" alt="Dáleter" class="friend-av-img">
+      <div class="friend-text">
+        <h3 class="friend-title">Oi, sou o Dáleter!</h3>
+        <p>Esse é um projeto pessoal meu para ajudar a <b>pagar a faculdade</b>. Toda a renda vai direto pra isso, então sua participação faz diferença de verdade!</p>
+        <p>Após o sorteio entrarei em contato pelo WhatsApp para perguntar o <b>modelo que você prefere</b> — masculino, feminino ou infantil — e confirmar o endereço de entrega. 🇧🇷</p>
+        <div class="friend-sign">— Dáleter 🎓</div>
+      </div>
+    </div>
+
+    <!-- ── COMO FUNCIONA ── -->
+    <section class="how-section">
+      <h3 class="section-title">Como funciona</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Escolhe os números</div>
+            <div class="step-desc">Quantos você quiser — quanto mais, maior a chance de ganhar!</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Paga no Pix</div>
+            <div class="step-desc">R$ 15 por número. Chave Pix copiável com confirmação na hora.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Sorteio via random.org</div>
+            <div class="step-desc">Número sorteado de forma pública e transparente pelo random.org quando todos os números forem vendidos.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Ganhador avisado no WhatsApp</div>
+            <div class="step-desc">Entro em contato pelo WhatsApp, pergunto o modelo da camisa (masc., fem. ou infantil) e mando pra casa — frete grátis! 🚚</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="faq-section">
+      <h3 class="section-title">Dúvidas frequentes</h3>
+      <details class="faq-item" open>
+        <summary>Quando é o sorteio?</summary>
+        <p>Assim que todos os 120 números forem vendidos. O número será gerado pelo random.org de forma totalmente transparente.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Como serei avisado se ganhar?</summary>
+        <p>Entrarei em contato pelo WhatsApp com o número que você informou na compra. Combinamos o modelo da camisa e o endereço de entrega.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Como sei que é transparente?</summary>
+        <p>O sorteio é feito pelo random.org, um gerador de números aleatórios público e reconhecido. O resultado é postado aqui no site assim que o sorteio acontecer.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Posso comprar quantos números?</summary>
+        <p>Pode! Até 50 por compra. Quanto mais números, maior sua chance de ganhar.</p>
+      </details>
+      <details class="faq-item">
+        <summary>O frete é grátis mesmo?</summary>
+        <p>Sim! Mando pra qualquer lugar do Brasil pelos Correios. Costuma chegar em 5 a 8 dias úteis.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Posso escolher o modelo da camisa?</summary>
+        <p>Sim! Após o sorteio entro em contato e você escolhe entre masculino, feminino ou infantil.</p>
+      </details>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="rodape">
+    <div class="rodape-badges">
+      <span class="rodape-badge">🎲 random.org</span>
+      <span class="rodape-badge">🔒 Pix seguro</span>
+      <span class="rodape-badge">📦 Frete grátis</span>
+    </div>
+    <p>🇧🇷 Rifa <b>100% transparente</b> · Sorteio via random.org</p>
+    <p>Dúvidas? Chame no WhatsApp 👇</p>
+    <a class="rodape-whats" href="https://wa.me/5519988669279?text=Oi%20D%C3%A1leter%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20a%20rifa!" target="_blank" rel="noopener">
+      💬 Falar com o Dáleter
+    </a>
+  </footer>
+
+  <!-- ── STICKY BOTTOM BAR (mobile) ── -->
+  <div class="sticky-bar" id="sticky-bar" style="display:none">
+    <div class="sticky-info">
+      <div class="sticky-label" id="sticky-label">Nenhum selecionado</div>
+      <div class="sticky-total" id="sticky-total">R$ 0,00 · Pix</div>
+    </div>
+    <button class="sticky-btn" onclick="abrirModal()">Pagar agora →</button>
+  </div>
+
+  <!-- ── MODAL COMPRA ── -->
+  <div id="modal-compra" class="modal" style="display:none">
+    <div class="modal-overlay" onclick="fecharModal()"></div>
+    <div class="modal-box">
+      <button class="modal-fechar" onclick="fecharModal()" aria-label="Fechar">✕</button>
+      <h2>Finalizar Compra</h2>
+
+      <div id="modal-conteudo-formulario">
+        <div class="resumo-compra">
+          <p>Números: <strong id="modal-numeros">—</strong></p>
+          <p>Total: <strong id="modal-total">—</strong></p>
+        </div>
+
+        <div class="form-group">
+          <label for="input-nome">Nome completo *</label>
+          <input type="text" id="input-nome" placeholder="Seu nome completo" maxlength="100" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="input-telefone">WhatsApp / Telefone *</label>
+          <input type="tel" id="input-telefone" placeholder="(19) 99999-9999" maxlength="20" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="input-endereco">Cidade e Estado *</label>
+          <textarea id="input-endereco" placeholder="Ex: Campinas, SP" rows="2" maxlength="300" autocomplete="street-address"></textarea>
+        </div>
+
+        <p class="obs-privacidade">🔒 Dados usados apenas para entrega do prêmio. Endereço completo solicitado apenas se ganhar.</p>
+
+        <button class="btn-confirmar" onclick="reservarNumeros()">Confirmar e ver dados do Pix</button>
+        <div id="erro-formulario" class="erro-msg" style="display:none"></div>
+      </div>
+
+      <div id="modal-conteudo-pix" style="display:none">
+        <div class="pix-sucesso">
+          <div class="pix-check">✅</div>
+          <h3>Reserva confirmada!</h3>
+          <p>Você tem <strong id="pix-minutos">30</strong> minutos para pagar via Pix.</p>
+          <span id="pix-copia-cola" style="display:none"></span>
+
+          <div class="pix-copia-cola-box">
+            <div class="pix-copia-label">📋 Código Pix — abre no banco já com o valor</div>
+            <button class="btn-copiar-pix" onclick="copiarPix()">Copiar código</button>
+            <p class="pix-copia-hint">Abra seu banco → Pix → Copia e Cola → cole aqui</p>
+          </div>
+
+          <div class="pix-dados">
+            <p><strong>Chave:</strong> <span id="pix-chave">—</span></p>
+            <p><strong>Nome:</strong> <span id="pix-nome">—</span></p>
+            <p><strong>Valor:</strong> <span id="pix-valor">—</span></p>
+          </div>
+          <div class="pix-instrucoes">
+            <p>📱 <strong>Após pagar:</strong> Envie o comprovante pelo WhatsApp para confirmar sua participação e garantir os números!</p>
+          </div>
+          <a class="pix-whats-btn" href="https://wa.me/5519988669279?text=Oi%20D%C3%A1leter!%20Acabei%20de%20pagar%20o%20Pix%20da%20rifa.%20Segue%20o%20comprovante!" target="_blank" rel="noopener">
+            📤 Enviar comprovante no WhatsApp
+          </a>
+          <p class="pix-id">ID da reserva: <code id="pix-compra-id">—</code></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Sticky bar sincroniza com a seleção ──────────────────────────────────
+    const stickyBar   = document.getElementById('sticky-bar');
+    const stickyLabel = document.getElementById('sticky-label');
+    const stickyTotal = document.getElementById('sticky-total');
+
+    const observer = new MutationObserver(() => {
+      const infoEl = document.getElementById('selecao-texto');
+      if (!infoEl) return;
+      const txt = infoEl.textContent;
+      const visivel = document.getElementById('selecao-info').style.display !== 'none';
+      if (visivel && txt) {
+        const parts = txt.split(' • ');
+        stickyLabel.textContent = parts[0] || '';
+        stickyTotal.textContent = (parts[1] || '') + ' · Pix';
+        stickyBar.style.display = 'flex';
+      } else {
+        stickyBar.style.display = 'none';
+      }
+    });
+    const selInfo = document.getElementById('selecao-info');
+    if (selInfo) observer.observe(selInfo, { attributes: true, childList: true, subtree: true, characterData: true });
+
+    // ── Barra de progresso atualiza com os dados reais ─────────────────────
+    function atualizarProgressBar() {
+      const livresEl   = document.getElementById('stat-livres');
+      const vendidosEl = document.getElementById('stat-vendidos');
+      const fill = document.getElementById('progress-fill');
+      const txt  = document.getElementById('progress-text');
+      const urg  = document.getElementById('progress-urgency');
+      if (!livresEl || !vendidosEl || !fill) return;
+      const livres   = parseInt(livresEl.textContent)   || 0;
+      const vendidos = parseInt(vendidosEl.textContent) || 0;
+      const total    = livres + vendidos;
+      if (total > 0) {
+        const pct = Math.round((vendidos / total) * 100);
+        fill.style.width = pct + '%';
+        txt.textContent  = `${vendidos} vendidos · ${livres} disponíveis de ${total}`;
+        if (pct >= 80) {
+          urg.textContent    = '⚡ Últimas vagas!';
+          urg.style.display  = 'inline';
+        } else if (pct >= 50) {
+          urg.textContent    = '🔥 Mais da metade vendida!';
+          urg.style.display  = 'inline';
+        } else {
+          urg.style.display  = 'none';
+        }
+      }
+    }
+    const statsObserver = new MutationObserver(atualizarProgressBar);
+    ['stat-livres', 'stat-vendidos'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) statsObserver.observe(el, { childList: true, characterData: true, subtree: true });
+    });
+  </script>
+</body>
+</html>

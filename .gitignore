@@ -1,0 +1,12 @@
+node_modules/
+.env
+rifa.db
+sessions.db
+*.db-journal
+*.db-shm
+*.db-wal
+uploads/
+backups/
+.claude/
+ChatGPT Image*.png
+Rifa Camisa Brasil.html

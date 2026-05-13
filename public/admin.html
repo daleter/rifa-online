@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin — Rifa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde: #00c851;
+      --verde-dark: #009c3b;
+      --amarelo: #ffbb33;
+      --vermelho: #ff4444;
+      --azul: #1a56db;
+      --fundo: #0d1117;
+      --fundo-card: #161b22;
+      --borda: #30363d;
+      --texto: #e6edf3;
+      --texto-muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--fundo); color: var(--texto); min-height: 100vh; }
+
+    /* Login */
+    #tela-login {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 1rem;
+    }
+    .login-box {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%; max-width: 380px;
+    }
+    .login-box h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    .login-box p { color: var(--texto-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.83rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--texto-muted); }
+    .form-group input {
+      width: 100%;
+      background: var(--fundo);
+      border: 1px solid var(--borda);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      color: var(--texto);
+      font-size: 0.95rem;
+    }
+    .form-group input:focus { outline: none; border-color: var(--verde); }
+    .btn-login {
+      width: 100%; padding: 0.85rem;
+      background: linear-gradient(135deg, #009c3b, #007a2f);
+      color: white; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem;
+    }
+    .btn-login:hover { background: linear-gradient(135deg, #00c851, #009c3b); }
+    .login-erro { color: var(--vermelho); font-size: 0.85rem; margin-top: 0.75rem; text-align: center; }
+
+    /* Dashboard */
+    #tela-admin { display: none; }
+    .topbar {
+      background: var(--fundo-card);
+      border-bottom: 1px solid var(--borda);
+      padding: 0.9rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar h1 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; }
+    .btn-logout {
+      background: transparent; border: 1px solid var(--borda);
+      color: var(--texto-muted); border-radius: 6px;
+      padding: 0.35rem 0.85rem; cursor: pointer; font-size: 0.85rem;
+    }
+    .btn-logout:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+    .admin-body { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .stat-card .valor {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--verde);
+    }
+    .stat-card.amarelo .valor { color: var(--amarelo); }
+    .stat-card.vermelho .valor { color: var(--vermelho); }
+    .stat-card.azul .valor { color: #60a5fa; }
+    .stat-card label { font-size: 0.78rem; color: var(--texto-muted); margin-top: 0.3rem; display: block; }
+
+    /* Sorteio panel */
+    .sorteio-panel {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .sorteio-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: 1rem; }
+    .btn-sorteio {
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: white; border: none; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-sorteio:hover { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .btn-sorteio:disabled { opacity: 0.5; cursor: not-allowed; }
+    .sorteio-resultado-admin {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0,200,81,0.08);
+      border: 1px solid rgba(0,200,81,0.3);
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Filtros */
+    .filtros {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .btn-filtro {
+      padding: 0.4rem 1rem;
+      background: transparent; border: 1px solid var(--borda);
+      color: var(--texto-muted); border-radius: 20px;
+      font-size: 0.85rem; cursor: pointer;
+    }
+    .btn-filtro.ativo { border-color: var(--verde); color: var(--verde); background: rgba(0,200,81,0.1); }
+
+    /* Tabela de compras */
+    .secao-compras h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: 1rem; }
+    .tabela-wrapper { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background: var(--fundo);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--texto-muted);
+      border-bottom: 1px solid var(--borda);
+      white-space: nowrap;
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--borda);
+      vertical-align: middle;
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .badge-status {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-status.pendente { background: rgba(255,187,51,0.15); color: var(--amarelo); }
+    .badge-status.confirmado { background: rgba(0,200,81,0.15); color: var(--verde); }
+    .badge-status.cancelado { background: rgba(255,68,68,0.15); color: var(--vermelho); }
+
+    .acoes { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .btn-confirmar-pag {
+      padding: 0.3rem 0.7rem;
+      background: var(--verde-dark); color: white;
+      border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+    }
+    .btn-confirmar-pag:hover { background: var(--verde); }
+    .btn-cancelar-pag {
+      padding: 0.3rem 0.7rem;
+      background: transparent; color: var(--vermelho);
+      border: 1px solid var(--vermelho); border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+    }
+    .btn-cancelar-pag:hover { background: rgba(255,68,68,0.1); }
+
+    .msg-vazio { text-align: center; padding: 3rem; color: var(--texto-muted); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--fundo-card); border: 1px solid var(--borda);
+      border-radius: 10px; padding: 0.85rem 1.25rem;
+      font-size: 0.9rem; z-index: 9999;
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 320px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.sucesso { border-color: var(--verde); color: var(--verde); }
+    .toast.erro { border-color: var(--vermelho); color: var(--vermelho); }
+
+    /* Modal confirmar */
+    .modal-confirm {
+      position: fixed; inset: 0; z-index: 1000;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    }
+    .modal-confirm.show { display: flex; }
+    .modal-confirm-box {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%; max-width: 420px;
+    }
+    .modal-confirm-box h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+    .modal-confirm-box textarea {
+      width: 100%;
+      background: var(--fundo);
+      border: 1px solid var(--borda);
+      border-radius: 8px;
+      padding: 0.65rem;
+      color: var(--texto);
+      font-family: inherit;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      resize: vertical;
+    }
+    .modal-confirm-box textarea:focus { outline: none; border-color: var(--verde); }
+    .modal-confirm-acoes { display: flex; gap: 0.75rem; }
+    .btn-sim {
+      flex: 1; padding: 0.75rem;
+      background: var(--verde-dark); color: white;
+      border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+    }
+    .btn-sim:hover { background: var(--verde); }
+    .btn-nao {
+      flex: 1; padding: 0.75rem;
+      background: transparent; color: var(--texto-muted);
+      border: 1px solid var(--borda); border-radius: 8px; cursor: pointer;
+    }
+    .btn-nao:hover { border-color: var(--texto-muted); }
+  </style>
+</head>
+<body>
+
+<!-- Tela de Login -->
+<div id="tela-login">
+  <div class="login-box">
+    <h1>🔐 Painel Admin</h1>
+    <p>Acesso restrito ao organizador da rifa</p>
+    <div class="form-group">
+      <label for="login-usuario">Usuário</label>
+      <input type="text" id="login-usuario" autocomplete="username" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label for="login-senha">Senha</label>
+      <input type="password" id="login-senha" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <button class="btn-login" onclick="fazerLogin()">Entrar</button>
+    <p class="login-erro" id="login-erro" style="display:none"></p>
+  </div>
+</div>
+
+<!-- Tela Admin -->
+<div id="tela-admin">
+  <div class="topbar">
+    <h1>🎟️ Admin — Rifa da Seleção</h1>
+    <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- Stats -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <div class="valor" id="s-livres">—</div>
+        <label>Números livres</label>
+      </div>
+      <div class="stat-card amarelo">
+        <div class="valor" id="s-reservados">—</div>
+        <label>Reservados</label>
+      </div>
+      <div class="stat-card vermelho">
+        <div class="valor" id="s-vendidos">—</div>
+        <label>Vendidos</label>
+      </div>
+      <div class="stat-card amarelo">
+        <div class="valor" id="s-pendentes">—</div>
+        <label>Compras pendentes</label>
+      </div>
+      <div class="stat-card">
+        <div class="valor" id="s-confirmadas">—</div>
+        <label>Compras confirmadas</label>
+      </div>
+      <div class="stat-card azul">
+        <div class="valor" id="s-arrecadado">—</div>
+        <label>Total arrecadado</label>
+      </div>
+    </div>
+
+    <!-- Sorteio -->
+    <div class="sorteio-panel">
+      <h2>🎯 Sorteio</h2>
+      <div id="sorteio-info"></div>
+      <button class="btn-sorteio" id="btn-sorteio" onclick="confirmarSorteio()">
+        🎲 Executar Sorteio Agora
+      </button>
+    </div>
+
+    <!-- Compras -->
+    <div class="secao-compras">
+      <h2>📋 Compras</h2>
+      <div class="filtros">
+        <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todas</button>
+        <button class="btn-filtro" onclick="filtrar('pendente', this)">Pendentes</button>
+        <button class="btn-filtro" onclick="filtrar('confirmado', this)">Confirmadas</button>
+        <button class="btn-filtro" onclick="filtrar('cancelado', this)">Canceladas</button>
+      </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Comprador</th>
+              <th>Telefone</th>
+              <th>Números</th>
+              <th>Valor</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-compras">
+            <tr><td colspan="7" class="msg-vazio">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal confirmação sorteio -->
+<div class="modal-confirm" id="modal-sorteio">
+  <div class="modal-confirm-box">
+    <h3>⚠️ Confirmar execução do sorteio?</h3>
+    <p style="color:var(--texto-muted);font-size:0.9rem;margin-bottom:1rem;">
+      Esta ação é irreversível. O número será sorteado entre os vendidos.
+    </p>
+    <div class="modal-confirm-acoes">
+      <button class="btn-nao" onclick="fecharModalSorteio()">Cancelar</button>
+      <button class="btn-sim" onclick="executarSorteio()">Sim, sortear!</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmação pagamento -->
+<div class="modal-confirm" id="modal-confirmar-pag">
+  <div class="modal-confirm-box">
+    <h3>✅ Confirmar pagamento recebido?</h3>
+    <input type="hidden" id="modal-compra-id">
+    <textarea id="modal-obs" rows="2" placeholder="Observação opcional (ex: Pix recebido às 14h)"></textarea>
+    <div class="modal-confirm-acoes">
+      <button class="btn-nao" onclick="fecharModalPag()">Cancelar</button>
+      <button class="btn-sim" onclick="confirmarPagamento()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

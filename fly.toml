@@ -1,0 +1,38 @@
+# fly.toml — configuração do Fly.io
+# Troque "rifa-daleter" por outro nome se já estiver em uso
+
+app = "rifa-daleter"
+primary_region = "gru"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  DB_PATH = "/data/rifa.db"
+
+[mounts]
+  source = "rifa_data"
+  destination = "/data"
+
+[[services]]
+  internal_port = 3000
+  protocol = "tcp"
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+    force_https = true
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [services.http_checks]
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "10s"
+    path = "/api/sorteio"
