@@ -5,12 +5,11 @@ const rateLimit = require('express-rate-limit');
 const cron = require('node-cron');
 const path = require('path');
 
-const { initDb, pool } = require('./db');
+const { initDb } = require('./db');
 const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
 const { liberarReservasExpiradas } = require('./services/reservas');
-const { executarSorteio } = require('./services/sorteio');
-const { notificarSorteio, iniciarPolling } = require('./services/telegram');
+const { iniciarPolling } = require('./services/telegram');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -76,30 +75,6 @@ cron.schedule('*/2 * * * *', () => {
   liberarReservasExpiradas().catch(err => console.error('[Cron] Erro ao liberar reservas:', err.message));
 });
 
-// Cron: verificar sorteio agendado a cada minuto
-cron.schedule('* * * * *', async () => {
-  const dataHoraStr = process.env.SORTEIO_DATA_HORA;
-  if (!dataHoraStr) return;
-
-  const agora     = new Date();
-  const agendado  = new Date(dataHoraStr);
-
-  if (isNaN(agendado.getTime()) || agora < agendado) return;
-
-  try {
-    const { rows } = await pool.query('SELECT numero_sorteado FROM sorteio WHERE id = 1');
-    if (rows[0]?.numero_sorteado) return;
-
-    console.log('[Cron] Executando sorteio agendado...');
-    const resultado = await executarSorteio();
-    if (resultado.sucesso) {
-      console.log('[Cron] Sorteio realizado:', resultado.resultado);
-      notificarSorteio(resultado.resultado).catch(console.error);
-    }
-  } catch (err) {
-    console.error('[Cron] Erro no sorteio:', err.message);
-  }
-});
 
 // Inicializa banco e sobe o servidor
 initDb()
