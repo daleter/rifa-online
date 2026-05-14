@@ -21,7 +21,7 @@ services:
       - key: TELEGRAM_CHAT_ID
         sync: false
       - key: SORTEIO_DATA_HORA
-        value: "2025-07-15T20:00:00"
+        value: ""
       - key: PIX_CHAVE
         sync: false
       - key: PIX_NOME
