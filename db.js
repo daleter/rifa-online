@@ -1,4 +1,6 @@
 require('dotenv').config();
+// Render free tier não roteia IPv6 — força resolução IPv4
+require('dns').setDefaultResultOrder('ipv4first');
 const { Pool } = require('pg');
 
 const pool = new Pool({
