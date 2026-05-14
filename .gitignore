@@ -10,3 +10,5 @@ backups/
 .claude/
 ChatGPT Image*.png
 Rifa Camisa Brasil.html
+Dockerfile
+.dockerignore

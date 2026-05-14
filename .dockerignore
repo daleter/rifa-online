@@ -1,6 +1,0 @@
-node_modules
-.env
-rifa.db
-backups
-*.db-journal
-sessions.db
